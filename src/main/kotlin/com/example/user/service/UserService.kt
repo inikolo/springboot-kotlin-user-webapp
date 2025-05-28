@@ -7,10 +7,11 @@ import com.example.user.exception.DuplicateEmailException
 import com.example.user.model.User
 import com.example.user.repository.UserRepository
 import org.springframework.data.domain.PageRequest
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(private val userRepository: UserRepository) {
+class UserService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
 
     fun createUser(createUserRequest: CreateUserRequest) {
 
@@ -19,8 +20,8 @@ class UserService(private val userRepository: UserRepository) {
                 throw DuplicateEmailException("Duplicate e-mail: $email")
             }
 
-            //TODO: encrypt password here
-            userRepository.save(User(name, email, password))
+            val encodedPassword = passwordEncoder.encode(password)
+            userRepository.save(User(name, email, encodedPassword))
         }
     }
 
