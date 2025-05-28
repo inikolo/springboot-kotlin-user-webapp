@@ -25,10 +25,10 @@ class UserService(private val userRepository: UserRepository, private val passwo
         }
     }
 
-    fun getUsersByNameStartingWith(namePrefix: String, pageNumber: Int, pageSize: Int): GetUsersResponse {
+    fun getUsersByNameStartingWith(namePrefix: String, pageNumber: Int = 0, pageSize: Int): GetUsersResponse {
 
-        require(pageNumber >= 0) { "Page number must be non-negative, but is was $pageNumber" }
-        require(pageSize >= 1) { "Page size must be positive, but is was $pageSize" }
+        require(pageNumber >= 0) { "Page number must be non-negative, but it was $pageNumber" }
+        require(pageSize >= 1) { "Page size must be positive, but it was $pageSize" }
 
         val pageRequest = PageRequest.of(pageNumber, pageSize)
         val userDTOList = userRepository.findAllByNameStartingWithIgnoreCase(namePrefix, pageRequest)

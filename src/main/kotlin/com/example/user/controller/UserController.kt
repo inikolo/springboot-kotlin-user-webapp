@@ -22,6 +22,6 @@ class UserController(private val userService: UserService) {
         @RequestParam(defaultValue = "") query: String,
         @RequestParam(defaultValue = "10") limit: Int
     ): ResponseEntity<GetUsersResponse> {
-        return ResponseEntity.ok(userService.getUsersByNameStartingWith(query,0, limit))
+        return ResponseEntity.ok(userService.getUsersByNameStartingWith(namePrefix = query, pageSize = limit))
     }
 }
