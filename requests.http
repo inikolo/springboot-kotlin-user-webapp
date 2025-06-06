@@ -1,0 +1,35 @@
+### Create a User "John Doe" with a unique email
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@users.com",
+  "password": "Doe"
+}
+
+### Create a User "Anna Doe" with a unique email
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Anna Doe",
+  "email": "anna@users.com",
+  "password": "Doe"
+}
+
+### Create a User "Anna Smith" with a duplicate email
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Anna Smith",
+  "email": "anna@users.com",
+  "password": "Smith"
+}
+
+### Get all the users
+GET http://localhost:8080/users
+
+### Get a maximum of 5 users whose name starts with "anna" (case-insensitive)
+GET http://localhost:8080/users?query=anna&limit=5
