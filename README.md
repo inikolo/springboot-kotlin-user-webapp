@@ -50,7 +50,7 @@ Response Body (JSON):
   "totalCount": 42
 }
 ```
-where `totalCount` is the total number of user records.
+where `totalCount` is the total number of users with the specified name prefix.
 
 ## How to build the project
 1. Open terminal or command prompt
