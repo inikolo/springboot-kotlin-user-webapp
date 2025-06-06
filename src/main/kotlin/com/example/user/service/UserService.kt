@@ -28,12 +28,15 @@ class UserService(private val userRepository: UserRepository, private val passwo
     fun getUsersByNameStartingWith(namePrefix: String, pageNumber: Int = 0, pageSize: Int): GetUsersResponse {
 
         require(pageNumber >= 0) { "Page number must be non-negative, but it was $pageNumber" }
-        require(pageSize >= 1) { "Page size must be positive, but it was $pageSize" }
+        require(pageSize >= 1 && pageSize <= 50) {
+            "Page size must be between 1 and 50 (both inclusive), but it was $pageSize"
+        }
 
-        val pageRequest = PageRequest.of(pageNumber, pageSize)
-        val userDTOList = userRepository.findAllByNameStartingWithIgnoreCase(namePrefix, pageRequest)
-            .map(User::toDTO)
-        val totalNumOfUsers = userRepository.count()
+        val usersPageWithNamePrefix =
+            userRepository.findAllByNameStartingWithIgnoreCase(namePrefix, PageRequest.of(pageNumber, pageSize))
+
+        val userDTOList = usersPageWithNamePrefix.content.map(User::toDTO)
+        val totalNumOfUsers = usersPageWithNamePrefix.totalElements
 
         return GetUsersResponse(userDTOList, totalNumOfUsers)
     }
